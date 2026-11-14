@@ -205,6 +205,23 @@ cython_debug/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
 
+# Web application and local test output
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.env.local
+.env.*.local
+playwright-report/
+.playwright-browsers/
+test-results/
+.DS_Store
+
+# Keep frontend source libraries despite the Python template's lib/ rule.
+!frontend/src/lib/
+!frontend/src/lib/**
+frontend/next-env.d.ts
+
 # Ruff stuff:
 .ruff_cache/
 
