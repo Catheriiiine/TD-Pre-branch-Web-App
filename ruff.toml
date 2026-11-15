@@ -1,0 +1,13 @@
+# Official Ruff rules and formatter. If the repository already has Ruff rules
+# in pyproject.toml, merge these settings there instead of creating conflicts.
+line-length = 88
+
+[lint]
+select = ["E4", "E7", "E9", "F", "I", "PLR2004"]
+# Ruff's PLR2004 already exempts familiar numbers (0, 1, 2 and more).
+
+[lint.per-file-ignores]
+# Numeric fixtures and assertions naturally need literal values.
+"**/test_*.py" = ["PLR2004"]
+"**/*_test.py" = ["PLR2004"]
+"**/tests/**" = ["PLR2004"]

@@ -4,6 +4,34 @@ A TD-inspired **university frontend prototype**. Explore scripted banking questi
 
 **Not affiliated with TD. All guidance, branches, and appointments are simulated. Do not enter personal or account information.**
 
+## Pre commits
+Before you start, run the pre commit setup to make sure our code style matches, check out the PRECOMMIT.md file.
+
+Before committing, make sure your code follows these rules:
+
+**Commit messages**: Use Conventional Commits, e.g., feat: add login page, fix: resolve error, refactor: simplify code, chore: update dependencies, docs: update README, or test: add unit tests.
+
+**Function naming**: Use camelCase (e.g., getUserData()), not snake_case (e.g., get_user_data()). Classes and React components should use PascalCase.
+
+**Function documentation**: Every function must have at least one descriptive docstring (Python) or JSDoc comment (JavaScript/TypeScript) explaining what it does.
+
+**No magic numbers**: Avoid unexplained hardcoded numbers in your code. Define meaningful named constants instead (e.g., MAX_RETRIES = 3).
+
+**Code formatting**: Follow consistent formatting and indentation. Ruff and Prettier will automatically fix most formatting issues.
+
+**Unused code**: Remove unused imports and variables.
+
+**Imports**: Keep imports properly organized (automatically handled by Ruff and ESLint).
+
+**File quality**: Do not commit merge conflict markers, invalid JSON/YAML, private keys, or unnecessarily large files.
+
+**If a commit fails**: Read the error message, fix the reported issues, and try again. If files were automatically formatted, stage them again using git add before recommitting.
+
+To manually check all files:
+```bash
+pre-commit run --all-files
+```
+
 ## Current milestone
 
 The only runnable application is `frontend/`. It works without Python, an API key, environment variables, or a backend server.

@@ -1,0 +1,15 @@
+[MAIN]
+# Keep Pylint focused on requested checks; Ruff handles the other lint rules.
+# Avoid unrelated dependency/import/type inference warnings.
+
+[MESSAGES CONTROL]
+disable=all
+enable=invalid-name,missing-function-docstring
+
+[BASIC]
+# camelCase for functions/methods. Keep pytest names and unittest hooks.
+function-rgx=^([a-z][a-zA-Z0-9]*|test_[a-zA-Z0-9_]+)$
+method-rgx=^([a-z][a-zA-Z0-9]*|test_[a-zA-Z0-9_]+|setUp|tearDown|setUpClass|tearDownClass)$
+# Exempt magic/dunder methods and pytest test functions from docstrings.
+no-docstring-rgx=^(__.*__|test_.*)$
+docstring-min-length=-1

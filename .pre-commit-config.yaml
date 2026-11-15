@@ -1,0 +1,64 @@
+# Shared developer and PR quality checks.
+# No custom validators: local hooks below invoke installed official CLI tools.
+default_install_hook_types: [pre-commit, commit-msg]
+minimum_pre_commit_version: '3.2.0'
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-json
+      - id: check-yaml
+      - id: check-added-large-files
+        args: [--maxkb=1000, --enforce-all]
+      - id: detect-private-key
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.5
+    hooks:
+      - id: ruff-check
+        args: [--fix, --exit-non-zero-on-fix]
+        types_or: [python, pyi]
+      - id: ruff-format
+        types_or: [python, pyi]
+
+  - repo: local
+    hooks:
+      # Pylint uses its own pre-commit-managed environment; only AST-level
+      # naming and docstring rules are enabled so backend dependencies are
+      # not required for linting.
+      - id: pylint
+        name: pylint (function names and docstrings)
+        entry: pylint --rcfile=.pylintrc --reports=n --score=n
+        language: python
+        additional_dependencies: [pylint==4.1.3]
+        types: [python]
+        require_serial: true
+
+      # Use the repo's existing frontend npm dependencies and ESLint config.
+      - id: prettier
+        name: prettier (frontend format)
+        entry: frontend/node_modules/.bin/prettier --write
+        language: system
+        files: '^frontend/.*\.(?:[cm]?[jt]sx?|css|scss|json|md|mdx|ya?ml)$'
+        exclude: '^frontend/(?:package-lock\.json|src/types/api\.generated\.ts)$'
+
+      - id: eslint
+        name: eslint (frontend rules)
+        # npm runs this script from frontend/, matching npm run lint locally.
+        entry: npm --prefix frontend run lint
+        language: system
+        pass_filenames: false
+        require_serial: true
+        files: '^frontend/.*\.[cm]?[jt]sx?$'
+        exclude: '^frontend/(?:src/types/api\.generated\.ts|next-env\.d\.ts)$'
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.5.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: [--verbose, feat, fix, refactor, chore, docs, test, build, ci, perf, style, revert]
